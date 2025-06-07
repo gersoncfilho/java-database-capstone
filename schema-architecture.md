@@ -20,7 +20,7 @@ The technologies used are listed below.
 - **Swagger/OpenAPI**: For documenting the API.
 - **Docker**: For containerizing the application.
 
-## Architecture Overview
+## Architecture Summary
 
 ![img.png](img.png)
 
@@ -39,5 +39,14 @@ Both types of controllers interact with a **service layer**, which in turn acces
 `MySqlRepositories` and `MongoDbRepository`.
 
 Repositories have access to the **domain layer**, including models/entities, and interact directly with the databases.
+
+## Data flow
+
+1. The user will interact with the application through AdminDashboard or DoctorDashboard.
+2. These dashboards will request to the Thymeleaf controllers to render HTML content.
+3. The action triggered by these dashboards will be redirected to the appropriate REST module.
+4. These rest modules will handle the business logic and interact with the service layer.
+5. The service layer will access the appropriate repository.
+6. Each repository will interact with appropriate models/entities and perform the necessary database operations.
 
 👉 Next: [How to build/run the project](./SETUP.md)
