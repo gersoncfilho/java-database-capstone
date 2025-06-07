@@ -48,5 +48,6 @@ Repositories have access to the **domain layer**, including models/entities, and
 4. These rest modules will handle the business logic and interact with the service layer.
 5. The service layer will access the appropriate repository.
 6. Each repository will interact with appropriate models/entities and perform the necessary database operations.
+7. Data will be returned to the service layer, then to the REST module, and finally to the Thymeleaf controller.
 
 👉 Next: [How to build/run the project](./SETUP.md)
