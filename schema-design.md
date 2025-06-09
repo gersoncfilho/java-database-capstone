@@ -14,11 +14,20 @@
 - id: INT, Primary Key, Auto Increment
 - role_id: INT, Foreign Key → roles(id)
 - name: VARCHAR(255), Not Null
-- specialization: VARCHAR(255), Not Null
+- specialty: VARCHAR(50), Not Null
 - email: VARCHAR(255), Not Null, Unique
+- phone: VARCHAR(10), Not Null
 - password: VARCHAR(255), Not Null
+- availableTimes: TEXT, Not Null (JSON format for available times)
 - last_login: DATETIME, Null
-- 
+- created_at: DATETIME, Not Null, Default CURRENT_TIMESTAMP
+- address_street: VARCHAR(255), Not Null
+- address_number: Integer Not Mull
+- address_city: VARCHAR(100), Not Null
+- address_state: VARCHAR(2), Not Null
+- address_zip: VARCHAR(10), Not Null
+- address_type: Integer, Not Null (0 = Home, 1 = Work, 2 = Other)
+
 ### Table: roles
 - id: INT, Primary Key, Auto Increment
 - role: INT, Not Null (0 = Admin, 1 = Doctor, 2 = Patient)
@@ -41,49 +50,48 @@
 - email: VARCHAR(255), Not Null, Unique
 - password: VARCHAR(255), Not Null
 - phone: VARCHAR(20), Not Null
-- address_id: INT, Foreign Key → addresses(id)
+- address_street: VARCHAR(255), Not Null
+- address_number: Integer Not Mull
+- address_city: VARCHAR(100), Not Null
+- address_state: VARCHAR(2), Not Null
+- address_zip: VARCHAR(10), Not Null
+- address_type: Integer, Not Null (0 = Home, 1 = Work, 2 = Other)
 - date_of_birth: DATE, Not Null
 - last_visit: DATETIME, Null
 
 ### Table: admin
 - id: INT, Primary Key, Auto Increment
-- role_id: INT, Foreign Key → roles(id)
-- username: VARCHAR(255), Not Null, Unique
-- password: VARCHAR(255), Not Null
-- email: VARCHAR(255), Not Null, Unique
+- role_id: LONG, Foreign Key → roles(id)
+- email: VARCHAR(50), Not Null, Unique
+- username: VARCHAR(50), Not Null, Unique
+- password: VARCHAR(20), Not Null
 - created_at: DATETIME, Not Null, Default CURRENT_TIMESTAMP
-- last_login: DATETIME, Null
+- last_login: DATE, Null
 
 ### Table: payments
 - id: INT, Primary Key, Auto Increment
 - appointment_id: INT, Foreign Key → appointments(id)
 - amount: DECIMAL(10, 2), Not Null
-- payment_date: DATETIME, Not Null, Default CURRENT_TIMESTAMP
+- payment_date: DATE, Not Null, Default CURRENT_TIMESTAMP
 - status: INT (0 = Pending, 1 = Completed, 2 = Failed)
 - payment_method_id: INT, Foreign Key → payment_methods(id)
 
-### Table: addresses
-- id: INT, Primary Key, Auto Increment
-- street: VARCHAR(255), Not Null
-- number: VARCHAR(20), Not Null
-- city: VARCHAR(100), Not Null
-- state: VARCHAR(100), Not Null
-- zip_code: VARCHAR(20), Not Null
-- type: INT (0 = Home, 1 = Work, 2 = Other)
-
 ## Table: clinic_locations
 - id: INT, Primary Key, Auto Increment
-- name: VARCHAR(255), Not Null
-- address_id: INT, Foreign Key → addresses(id)
-- phone: VARCHAR(20), Not Null
-- email: VARCHAR(255), Not Null, Unique
+- name: VARCHAR(100), Not Null
+- address_street: VARCHAR(255), Not Null
+- address_number: Integer Not Mull
+- address_city: VARCHAR(100), Not Null
+- address_state: VARCHAR(2), Not Null
+- address_zip: VARCHAR(10), Not Null
+- address_type: Integer, Not Null (0 = Home, 1 = Work, 2 = Other)
+- phone: VARCHAR(15), Not Null
+- email: VARCHAR(100), Not Null, Unique
 - created_at: DATETIME, Not Null, Default CURRENT_TIMESTAMP
 
 ## Table: payment_methods
-- id: INT, Primary Key, Auto Increment
-- method: VARCHAR(50), Not Null (e.g., "Credit Card", "PayPal")
-- created_at: DATETIME, Not Null, Default CURRENT_TIMESTAMP
-- is_active: BOOLEAN, Not Null, Default TRUE
+- payment_method_type: VARCHAR(50), Not Null (e.g., "Credit Card", "PayPal")
+- payment_method_details: VARCHAR(15), Not Null (e.g., "Visa", "MasterCard")
 
 ## MongoDb Collection design
 ### Collection: prescriptions
