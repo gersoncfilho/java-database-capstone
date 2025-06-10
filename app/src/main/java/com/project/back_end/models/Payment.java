@@ -20,7 +20,8 @@ public class Payment {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Long appointmentId;
+    @JoinColumn(name = "appointment_id")
+    private Appointment appointment;
 
     @NotNull
     @Column(name = "amount", nullable = false)
