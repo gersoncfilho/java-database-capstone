@@ -1,0 +1,64 @@
+spring:
+  application:
+    name: back-end
+  datasource:
+    url: jdbc:mysql://localhost:3306/java_db_capstone
+    username: root
+    password: Passw0rd_123
+    schema: public
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/prescriptions
+  liquibase:
+    enabled: true
+    contexts: development, production
+    change-log: classpath:db/changelog/db.changelog-master.xml
+
+  web:
+    resources:
+      static-locations: classpath:/static/
+      cache:
+        cachecontrol:
+          no-cache: true
+          no-store: true
+          must-revalidate: true
+          max-age: 0
+
+  profiles:
+    active: dev
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+  health:
+    db:
+      enabled: true
+    diskspace:
+      enabled: true
+
+
+api:
+  version: 1.0.0
+  title: Java Capstone Project API
+  description: API for managing prescriptions and related data in the Java Capstone Project.
+  contact:
+    name: Gerson Filho
+    email:
+  path: /
+
+jwt:
+  secret: $!@#$^%$$$%####$DDCPN0234FCFDPD8670M

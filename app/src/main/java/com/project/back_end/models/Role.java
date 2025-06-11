@@ -8,9 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 import lombok.Builder;
-import lombok.AccessLevel;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -29,9 +27,9 @@ public class Role {
     @EqualsAndHashCode.Include
     private Long id;
 
-    @NotNull
+    @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
-    private Integer role; // 0 = Admin, 1 = Doctor, 2 = Patient
+    private RoleType role;
 
     @ManyToMany
     @JoinTable(
@@ -50,9 +48,7 @@ public class Role {
     }
 
     @Builder
-    public Role(Long id, Integer role, LocalDateTime createdAt) {
-        this.id = id;
+    public Role(RoleType role) {
         this.role = role;
-        this.createdAt = createdAt != null ? createdAt : LocalDateTime.now();
     }
 }
