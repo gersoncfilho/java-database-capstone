@@ -20,11 +20,6 @@ import java.util.List;
 @Table(name = "doctors")
 public class Doctor extends User {
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id", referencedColumnName = "id")
-    @NotNull
-    private Role role;
-
     @NotNull
     @Size(min = 3, max = 50)
     private String specialty;

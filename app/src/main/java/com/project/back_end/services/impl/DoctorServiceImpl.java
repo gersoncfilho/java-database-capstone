@@ -50,14 +50,11 @@ public class DoctorServiceImpl implements DoctorService {
                 .orElseThrow(() -> new IllegalArgumentException("Doctor not found with ID: " + doctorId));
     }
 
-    public Doctor createIfNotExists(Doctor doctor) {
+    public void createIfNotExists(Doctor doctor) {
         Optional<Doctor> existing = Optional.ofNullable(doctorRepository.findByEmail(doctor.getEmail()));
         if (existing.isEmpty()) {
-            return doctorRepository.save(doctor);
-        } else {
-            throw new IllegalArgumentException("Doctor with email " + doctor.getEmail() + " already exists.");
+            doctorRepository.save(doctor);
         }
-
     }
 
     // 1. **Add @Service Annotation**:

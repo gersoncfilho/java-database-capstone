@@ -18,7 +18,7 @@ public interface DoctorService {
 //    - Instruction: Make sure to handle invalid login attempts and password mismatches properly with error responses.
     String validateDoctor(String email, String password);
     Doctor getById(Long doctorId);
-    Doctor createIfNotExists(Doctor doctor);
+    void createIfNotExists(Doctor doctor);
 
 
 
