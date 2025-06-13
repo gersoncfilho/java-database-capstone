@@ -20,14 +20,10 @@ import java.util.List;
 @Table(name = "doctors")
 public class Doctor extends User {
 
-    @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", referencedColumnName = "id")
-    private Role role;
-
     @NotNull
-    @Embedded
-    private Address address;
+    private Role role;
 
     @NotNull
     @Size(min = 3, max = 50)

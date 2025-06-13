@@ -14,26 +14,26 @@ import lombok.*;
 @NoArgsConstructor(force = true)
 public class Address {
     @NotNull
-    @Column(name= "street", nullable = false, length = 255)
-    String street;
+    @Column(name= "address_street", nullable = false, length = 255)
+    String addressStreet;
 
     @NotNull
-    @Column(name="number", nullable = false, length = 10)
-    String number;
+    @Column(name="address_number", nullable = false, length = 10)
+    String addressNumber;
 
     @NotNull
-    @Column(name="city", nullable = false, length = 100)
-    String city;
+    @Column(name="address_city", nullable = false, length = 100)
+    String addressCity;
 
     @NotNull
-    @Column(name="state", nullable = false, length = 2)
-    String state;
+    @Column(name="address_state", nullable = false, length = 2)
+    String addressState;
 
     @NotNull
-    @Column(name="zip_code", nullable = false, length = 10)
-    String zipCode;
+    @Column(name="address_zip_code", nullable = false, length = 10)
+    String addressZipCode;
 
     @NotNull
-    @Column(name="type", nullable = false)
-    Integer type; // 0 for home, 1 for work, 2 for other
+    @Column(name="address_type", nullable = false)
+    Integer addressType; // 0 for home, 1 for work, 2 for other
 }

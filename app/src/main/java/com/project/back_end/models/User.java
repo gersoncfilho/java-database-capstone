@@ -7,7 +7,9 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
@@ -15,6 +17,8 @@ import java.time.LocalDateTime;
 @Entity
 @SuperBuilder
 @Inheritance(strategy = InheritanceType.JOINED)
+@Getter
+@Setter
 @Table(name = "users")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class User {
@@ -41,9 +45,6 @@ public abstract class User {
             message = "The password must contain at least an uppercase letter, a number and a special character.")
     private String password;
 
-    @Column(name = "available_times", columnDefinition = "TEXT")
-    private String availableTimes; // JSON format, nullable for non-doctors
-
     private LocalDateTime lastLogin;
 
     @NotNull(message = "Phone number cannot be null and must be exactly 10 digits")
@@ -54,8 +55,28 @@ public abstract class User {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    @Column(name = "updated_at", nullable = true)
+    private LocalDateTime updatedAt;
+
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
     }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    @NotNull
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "address_street", column = @Column(name = "address_street")),
+            @AttributeOverride(name = "address_number", column = @Column(name = "address_number")),
+            @AttributeOverride(name = "address_city", column = @Column(name = "address_city")),
+            @AttributeOverride(name = "address_state", column = @Column(name = "address_state")),
+            @AttributeOverride(name = "address_type", column = @Column(name = "address_type")),
+            @AttributeOverride(name = "address_zip_code", column = @Column(name = "address_zip_code"))
+    })
+    private Address address;
 }

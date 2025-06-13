@@ -9,14 +9,17 @@ import org.springframework.stereotype.Component;
 @Profile("dev")
 public class SeedDatabaseData implements ApplicationRunner {
 
-    private final RoleSeeder seeder;
+    private final RoleSeeder roleSeeder;
+    private final DoctorSeed doctorSeeder;
 
-    public SeedDatabaseData (RoleSeeder seeder) {
-        this.seeder = seeder;
+    public SeedDatabaseData (RoleSeeder roleSeeder, DoctorSeed doctorSeeder) {
+        this.roleSeeder = roleSeeder;
+        this.doctorSeeder = doctorSeeder;
     }
 
     @Override
     public void run(ApplicationArguments args) {
-        seeder.seed();
+        roleSeeder.seed();
+        doctorSeeder.seed();
     }
 }

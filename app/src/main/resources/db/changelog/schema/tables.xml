@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="0-create-user-table" author="gersoncfilho">
+        <createTable tableName="users">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_login" type="TIMESTAMP"/>
+
+            <column name="phone" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="updated_at" type="TIMESTAMP">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="address_street" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="address_number" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="address_city" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="address_state" type="VARCHAR(2)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="address_type" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="address_zip_code" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1-create-role-table" author="gersoncfilho">
+        <createTable tableName="roles">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="role" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2-create-user-roles-table" author="gersoncfilho">
+        <createTable tableName="user_roles">
+            <column name="role_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="3-create-doctor-table" author="gersoncfilho">
+        <createTable tableName="doctors">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="role_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="specialty" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="doctor_available_times">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="doctor_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="available_time" type="VARCHAR(50)"/>
+        </createTable>
+    </changeSet>
+
+
+
+</databaseChangeLog>

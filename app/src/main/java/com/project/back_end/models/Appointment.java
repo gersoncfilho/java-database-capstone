@@ -50,13 +50,8 @@ public class Appointment {
         this.createdAt = LocalDateTime.now();
     }
 
-    @Column(name = "updated_at", nullable = false)
-    private LocalDateTime updatedAt;
-
-    @PreUpdate
-    public void preUpdate() {
-        this.updatedAt = LocalDateTime.now();
-    }
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt = null;
 
     @Transient
     public LocalDateTime getEndTime() {
