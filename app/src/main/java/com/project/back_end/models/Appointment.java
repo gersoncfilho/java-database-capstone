@@ -44,14 +44,14 @@ public class Appointment {
     @Column(name = "created_at", nullable = false, updatable = false)
     @Setter(AccessLevel.NONE)
     private LocalDateTime createdAt;
+    @Builder.Default
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt = null;
 
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
     }
-
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt = null;
 
     @Transient
     public LocalDateTime getEndTime() {
