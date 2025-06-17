@@ -21,25 +21,36 @@ public class ClinicLocation {
     private Long id;
 
     @NotNull
-    @Column(name="name", nullable = false, length = 100)
+    @Column(name = "name", nullable = false, length = 100)
     private String name;
 
     @NotNull
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "address_street", column = @Column(name = "address_street")),
+            @AttributeOverride(name = "address_number", column = @Column(name = "address_number")),
+            @AttributeOverride(name = "address_city", column = @Column(name = "address_city")),
+            @AttributeOverride(name = "address_state", column = @Column(name = "address_state")),
+            @AttributeOverride(name = "address_type", column = @Column(name = "address_type")),
+            @AttributeOverride(name = "address_zip_code", column = @Column(name = "address_zip_code"))
+    })
     private Address address;
 
     @NotNull
-    @Column(name="phone", nullable = false, length = 15)
+    @Column(name = "phone", nullable = false, length = 15)
     @Pattern(regexp = "^[0-9]{10,15}$", message = "Phone number must be between 10 and 15 digits.")
     private String phone;
 
     @NotNull
     @Email
-    @Column(name="email", nullable = false, unique = true, length = 100)
+    @Column(name = "email", nullable = false, unique = true, length = 100)
     private String email;
 
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
     @NotNull
-    @Column(name="created_at", nullable = false, updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @PrePersist

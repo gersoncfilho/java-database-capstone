@@ -1,23 +1,36 @@
 package com.project.back_end.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-import jakarta.validation.constraints.NotNull;
+import com.project.back_end.models.enums.PaymentType;
+import jakarta.persistence.*;
 import lombok.*;
 
-@Embeddable
-@Builder
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "payment_methods")
 @Getter
 @Setter
-@Value
+@NoArgsConstructor
 @AllArgsConstructor
-@NoArgsConstructor(force = true)
+@Builder
 public class PaymentMethod {
-    @NotNull
-    @Column(name = "type", nullable = false)
-    String type;
 
-    @NotNull
-    @Column(name = "details", nullable = false, length = 15)
-    String details;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type", nullable = false)
+    private PaymentType type;
+
+    @Column(name = "details", nullable = true, length = 255)
+    private String details;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+    }
 }

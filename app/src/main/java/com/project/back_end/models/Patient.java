@@ -1,6 +1,8 @@
 package com.project.back_end.models;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,15 +18,6 @@ import java.util.Date;
 @NoArgsConstructor
 @Table(name = "patients")
 public class Patient extends User {
-
-    @NotNull
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id", referencedColumnName = "id")
-    private Role role;
-
-    @Embedded
-    @NotNull
-    private Address address;
 
     @NotNull
     @Column(name = "birth_date", nullable = false)

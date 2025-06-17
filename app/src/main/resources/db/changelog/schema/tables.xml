@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog
-        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
@@ -78,26 +78,6 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="3-create-doctor-table" author="gersoncfilho">
-        <createTable tableName="doctors">
-            <column name="id" type="BIGINT" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="specialty" type="VARCHAR(50)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-        <createTable tableName="doctor_available_times">
-            <column name="id" type="BIGINT" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="doctor_id" type="BIGINT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="available_time" type="VARCHAR(50)"/>
-        </createTable>
-    </changeSet>
-
     <changeSet id="2-create-user-roles-table" author="gersoncfilho">
         <createTable tableName="user_roles">
             <column name="user_id" type="BIGINT">
@@ -115,4 +95,183 @@
                                  constraintName="fk_user_roles_role"/>
     </changeSet>
 
+    <changeSet id="3-create-doctor-table" author="gersoncfilho">
+        <createTable tableName="doctors">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="specialty" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="doctor_available_times">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="doctor_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="available_time" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="4-create-clinic-location-table" author="gersoncfilho">
+        <createTable tableName="clinic_location">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone" type="VARCHAR(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address_street" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="address_number" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="address_city" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="address_state" type="VARCHAR(2)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="address_type" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="address_zip_code" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="5-create-appointment-table" author="gersoncfilho">
+        <createTable tableName="appointments">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="doctor_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="patient_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="clinic_location_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="appointment_time" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="appointments" baseColumnNames="doctor_id"
+                                 referencedTableName="doctors" referencedColumnNames="id"
+                                 constraintName="fk_appointments_doctor"/>
+        <addForeignKeyConstraint baseTableName="appointments" baseColumnNames="patient_id"
+                                 referencedTableName="users" referencedColumnNames="id"
+                                 constraintName="fk_appointments_patient"/>
+        <addForeignKeyConstraint baseTableName="appointments" baseColumnNames="clinic_location_id"
+                                 referencedTableName="clinic_location" referencedColumnNames="id"
+                                 constraintName="fk_appointments_clinic_location"/>
+    </changeSet>
+
+    <changeSet id="6-create-doctor-available-times-table" author="gersoncfilho">
+        <addForeignKeyConstraint
+                baseTableName="doctor_available_times"
+                baseColumnNames="doctor_id"
+                referencedTableName="doctors"
+                referencedColumnNames="id"
+                constraintName="fk_doctor_available_times_doctor"/>
+    </changeSet>
+
+    <changeSet id="7-create-payment-method-table" author="gersoncfilho">
+        <createTable tableName="payment_methods">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="type" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="details" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="8-create-payment-table" author="gersoncfilho">
+        <createTable tableName="payments">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="appointment_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="payment_method_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amount" type="DECIMAL(10,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP">
+                <constraints nullable="true"/>
+            </column>
+            <column name="payment_date" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="payments" baseColumnNames="appointment_id"
+                                 referencedTableName="appointments" referencedColumnNames="id"
+                                 constraintName="fk_payments_appointment"/>
+        <addForeignKeyConstraint baseTableName="payments" baseColumnNames="payment_method_id"
+                                 referencedTableName="payment_methods" referencedColumnNames="id"
+                                 constraintName="fk_payments_payment_method"/>
+    </changeSet>
+
+    <changeSet id="9-create-patient-table" author="gersoncfilho">
+        <createTable tableName="patients">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false" referencedTableName="users" referencedColumnNames="id"
+                             foreignKeyName="fk_patient_user"/>
+            </column>
+            <column name="birth_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
 </databaseChangeLog>

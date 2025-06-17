@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -28,13 +29,25 @@ public class Payment {
     private BigDecimal amount;
 
     @NotNull
-    @Column(name="payment_date", nullable = false)
+    @Column(name = "payment_date", nullable = false)
     private Date paymentDate;
 
     @NotNull
     @Column(name = "status", nullable = false)
     private Integer status; // 0 = Pending, 1 = Completed, 2 = Failed
 
-    @Embedded
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "payment_method_id", nullable = false)
     private PaymentMethod paymentMethod;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+    }
 }

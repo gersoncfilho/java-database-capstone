@@ -1,14 +1,8 @@
 package com.project.back_end.models;
 
+import com.project.back_end.models.enums.RoleType;
 import jakarta.persistence.*;
-
-
-import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.EqualsAndHashCode;
-import lombok.Builder;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -42,13 +36,13 @@ public class Role {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @PrePersist
-    public void prePersist() {
-        this.createdAt = LocalDateTime.now();
-    }
-
     @Builder
     public Role(RoleType role) {
         this.role = role;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
     }
 }

@@ -11,15 +11,19 @@ public class SeedDatabaseData implements ApplicationRunner {
 
     private final RoleSeeder roleSeeder;
     private final DoctorSeed doctorSeeder;
+    private final DoctorAvailableTimesSeed doctorAvailableTimesSeed;
 
-    public SeedDatabaseData (RoleSeeder roleSeeder, DoctorSeed doctorSeeder) {
+    public SeedDatabaseData(RoleSeeder roleSeeder, DoctorSeed doctorSeeder,
+                            DoctorAvailableTimesSeed doctorAvailableTimesSeed) {
         this.roleSeeder = roleSeeder;
         this.doctorSeeder = doctorSeeder;
+        this.doctorAvailableTimesSeed = doctorAvailableTimesSeed;
     }
 
     @Override
     public void run(ApplicationArguments args) {
         roleSeeder.seed();
         doctorSeeder.seed();
+        doctorAvailableTimesSeed.seed();
     }
 }

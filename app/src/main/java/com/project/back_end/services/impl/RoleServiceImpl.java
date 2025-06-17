@@ -1,7 +1,7 @@
 package com.project.back_end.services.impl;
 
 import com.project.back_end.models.Role;
-import com.project.back_end.models.RoleType;
+import com.project.back_end.models.enums.RoleType;
 import com.project.back_end.repo.RoleRepository;
 import com.project.back_end.services.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ public class RoleServiceImpl implements RoleService {
     private final RoleRepository roleRepository;
 
     @Autowired
-    public RoleServiceImpl (RoleRepository roleRepository) {
+    public RoleServiceImpl(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
     }
 

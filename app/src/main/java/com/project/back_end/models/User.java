@@ -65,6 +65,7 @@ public abstract class User {
 
     @Column(name = "updated_at", nullable = true)
     private LocalDateTime updatedAt;
+
     @NotNull
     @Embedded
     @AttributeOverrides({

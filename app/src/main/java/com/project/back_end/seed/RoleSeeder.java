@@ -1,6 +1,6 @@
 package com.project.back_end.seed;
 
-import com.project.back_end.models.RoleType;
+import com.project.back_end.models.enums.RoleType;
 import com.project.back_end.services.RoleService;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +20,7 @@ public class RoleSeeder {
     }
 
     private void createIfNotExists(RoleType roleType) {
-        if(!roleService.existsByType(roleType)){
+        if (!roleService.existsByType(roleType)) {
             roleService.createRole(roleType);
         }
     }
